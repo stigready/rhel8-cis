@@ -1,0 +1,7 @@
+[
+  {
+    "version": "0.2.0-private-review",
+    "role": "rhel8_cis",
+    "matrix_status": "green"
+  }
+]

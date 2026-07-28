@@ -1,0 +1,18 @@
+{
+  "cis-l1": {
+    "playbook": "rhel8-playbook-cis_server_l1.yml",
+    "source_tasks": 729,
+    "kept": 713,
+    "exempt": 14,
+    "hold": 2,
+    "output": "roles/rhel8_cis/tasks/cis-l1.yml"
+  },
+  "cis-l2": {
+    "playbook": "rhel8-playbook-cis.yml",
+    "source_tasks": 1107,
+    "kept": 1091,
+    "exempt": 14,
+    "hold": 2,
+    "output": "roles/rhel8_cis/tasks/cis-l2.yml"
+  }
+}

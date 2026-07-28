@@ -1,0 +1,251 @@
+
+PLAY [verify] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : StigForge apply rhel8_cis profile cis-l1] ***
+included: /stigforge/roles/rhel8_cis/tasks/cis-l1.yml for localhost
+
+TASK [/stigforge/roles/rhel8_cis : Gather the package facts] *******************
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Ensure aide is installed] *******************
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Build and Test AIDE Database - Ensure AIDE Is Installed] ***
+skipping: [localhost] => (item=aide) 
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Ensure aide is installed] *******************
+skipping: [localhost] => (item=aide) 
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Ensure AIDE is installed] *******************
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Install cron] *******************************
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Ensure sudo is installed] *******************
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Ensure libpwquality is installed] ***********
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Ensure rsyslog is installed] ****************
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Configure Firewalld to Restrict Loopback Traffic - Ensure firewalld Package is Installed] ***
+skipping: [localhost] => (item=firewalld) 
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Configure Firewalld to Trust Loopback Traffic - Ensure firewalld Package is Installed] ***
+skipping: [localhost] => (item=firewalld) 
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Ensure nftables is installed] ***************
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Ensure NetworkManager is installed] *********
+skipping: [localhost] => (item=NetworkManager) 
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Ensure libselinux is installed] *************
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall mcstrans Package: Ensure mcstrans is removed] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall setroubleshoot Package: Ensure setroubleshoot is removed] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall DHCP Server Package: Ensure dhcp-server is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall bind Package: Ensure bind is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Remove ftp Package: Ensure ftp is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall vsftpd Package: Ensure vsftpd is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall httpd Package: Ensure httpd is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall nginx Package: Ensure nginx is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall cyrus-imapd Package: Ensure cyrus-imapd is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall dovecot Package: Ensure dovecot is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Ensure chrony is installed] *****************
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall rsync Package: Ensure rsync-daemon is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall xinetd Package: Ensure xinetd is removed] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Remove NIS Client: Ensure ypbind is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall ypserv Package: Ensure ypserv is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall telnet-server Package: Ensure telnet-server is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Remove telnet Clients: Ensure telnet is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall tftp-server Package: Ensure tftp-server is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Remove tftp Daemon: Ensure tftp is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall squid Package: Ensure squid is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall Samba Package: Ensure samba is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Uninstall net-snmp Package: Ensure net-snmp is removed] ***
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Gather the package facts] *******************
+ok: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Enable rsyslog Service - Enable Service rsyslog] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Enable systemd-journald Service - Enable Service systemd-journald] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Verify nftables Service is Disabled - Collect systemd Services Present in the System] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Verify nftables Service is Disabled - Ensure nftables.service is Masked] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Unit Socket Exists - nftables.socket] *******
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Verify nftables Service is Disabled - Disable Socket nftables] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable Bluetooth Service - Collect systemd Services Present in the System] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable Bluetooth Service - Ensure bluetooth.service is Masked] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Unit Socket Exists - bluetooth.socket] ******
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable Bluetooth Service - Disable Socket bluetooth] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable the Automounter - Collect systemd Services Present in the System] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable the Automounter - Ensure autofs.service is Masked] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Unit Socket Exists - autofs.socket] *********
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable the Automounter - Disable Socket autofs] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable Avahi Server Software - Collect systemd Services Present in the System] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable Avahi Server Software - Ensure avahi-daemon.service is Masked] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Unit Socket Exists - avahi-daemon.socket] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable Avahi Server Software - Disable Socket avahi-daemon] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Enable cron Service - Enable Service crond] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable rpcbind Service - Collect systemd Services Present in the System] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable rpcbind Service - Ensure rpcbind.service is Masked] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Unit Socket Exists - rpcbind.socket] ********
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable rpcbind Service - Disable Socket rpcbind] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable Network File System (nfs) - Collect systemd Services Present in the System] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable Network File System (nfs) - Ensure nfs-server.service is Masked] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Unit Socket Exists - nfs-server.socket] *****
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable Network File System (nfs) - Disable Socket nfs-server] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable the CUPS Service - Collect systemd Services Present in the System] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable the CUPS Service - Ensure cups.service is Masked] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Unit Socket Exists - cups.socket] ***********
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Disable the CUPS Service - Disable Socket cups] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Gather the service facts] *******************
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Build and Test AIDE Database - Build and Test AIDE Database] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Build and Test AIDE Database - Check Whether the Stock AIDE Database Exists] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Build and Test AIDE Database - Stage AIDE Database] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Set audit_tools fact] ***********************
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Ensure existing AIDE configuration for audit tools are correct] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Configure AIDE to properly protect audit tools] ***
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Configure Periodic Execution of AIDE] *******
+skipping: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Configure System Cryptography Policy] *******
+changed: [localhost]
+
+TASK [/stigforge/roles/rhel8_cis : Verify that Crypto Policy is Set (runtime)] ***
+fatal: [localhost]: FAILED! => {"changed": false, "cmd": "/usr/bin/update-crypto-policies --set DEFAULT:NO-SHA1", "msg": "[Errno 2] No such file or directory: b'/usr/bin/update-crypto-policies'", "rc": 2, "stderr": "", "stderr_lines": [], "stdout": "", "stdout_lines": []}
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=24   changed=1    unreachable=0    failed=1    skipped=55   rescued=0    ignored=0   
+
