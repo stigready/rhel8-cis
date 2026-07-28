@@ -3,7 +3,7 @@
   "role": "rhel8_cis",
   "profile": "cis-l2",
   "product": "rhel8",
-  "timestamp": "20260728T094233Z",
+  "timestamp": "20260726T140157Z",
   "outcome": "success",
   "matrix": {
     "role": "rhel8_cis",
@@ -28,20 +28,20 @@
   },
   "gates": {
     "ansible": {
-      "rc": 0
+      "rc": 2
     },
     "openscap": {
       "status": "pass",
-      "score": 97.78,
-      "pass": 88,
-      "fail": 2,
+      "score": 92.22,
+      "pass": 83,
+      "fail": 7,
       "floor": 90.0,
       "enforce": true,
       "meets_floor": true
     }
   },
   "poam": {
-    "total_exceptions": 2,
+    "total_exceptions": 7,
     "policy_exempt_count": 32
   },
   "artifacts": [
@@ -49,7 +49,7 @@
       "name": "OpenSCAP score summary (JSON)",
       "desc": "pass/fail counts, floor gate, failure rule ids",
       "local": "score.json",
-      "bytes": 368
+      "bytes": 565
     },
     {
       "name": "OpenSCAP results (XCCDF)",
@@ -61,13 +61,13 @@
       "name": "OpenSCAP ARF",
       "desc": "Asset Reporting Format \u2014 POA&M source (stigready parity)",
       "local": "arf.xml",
-      "bytes": 37854268
+      "bytes": 38162533
     },
     {
       "name": "OpenSCAP report (HTML)",
       "desc": "human-readable SSG scorecard",
       "local": "report.html",
-      "bytes": 2816250
+      "bytes": 2896244
     },
     {
       "name": "OpenSCAP score line",
@@ -79,13 +79,13 @@
       "name": "POA&M",
       "desc": "failures + policy-exempt inventory",
       "local": "poam.md",
-      "bytes": 1474
+      "bytes": 1711
     },
     {
       "name": "Ansible apply log",
       "desc": "role application inside verify container",
       "local": "ansible.log",
-      "bytes": 473621
+      "bytes": 10563
     },
     {
       "name": "Ansible exit code",
@@ -103,19 +103,7 @@
       "name": "Score gate stdout",
       "desc": "stigforge score CLI output",
       "local": "score.stdout",
-      "bytes": 368
-    },
-    {
-      "name": "Evidence report (HTML)",
-      "desc": "auditor-facing bundle index",
-      "local": "evidence-report.html",
-      "bytes": 5086
-    },
-    {
-      "name": "Evidence manifest",
-      "desc": "machine-readable index for this verify cell",
-      "local": "evidence.json",
-      "bytes": 2571
+      "bytes": 565
     }
   ]
 }
