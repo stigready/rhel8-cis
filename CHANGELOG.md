@@ -2,6 +2,23 @@
 
 Format based on [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.2.3-private-review] - 2026-07-29
+
+### Changed
+- StigForge export refresh for `rhel8_cis` at `0.2.3-private-review`.
+
+### Verified (OpenSCAP)
+
+- **`cis-l1`** — score **93.02%** (floor 90.0%) · gate **PASS** · evidence `20260726T140033Z`
+  - Remaining counted failures: `accounts_password_pam_modules_in_authselect_profile, accounts_umask_etc_bashrc, accounts_umask_etc_profile, configure_custom_crypto_policy_cis, no_files_or_dirs_ungroupowned, use_pam_wheel_group_for_su`
+- **`cis-l2`** — score **92.22%** (floor 90.0%) · gate **PASS** · evidence `20260726T140157Z`
+  - Remaining counted failures: `accounts_password_pam_modules_in_authselect_profile, accounts_umask_etc_bashrc, accounts_umask_etc_profile, configure_custom_crypto_policy_cis, disable_weak_deps, no_files_or_dirs_ungroupowned, use_pam_wheel_group_for_su`
+
+### Provenance
+
+- Factory pipeline: https://github.com/stigready/stigforge/actions/runs/30435216810
+- Factory commit: `e8e323a3af3258bee63ebc1a873ba26c0cc12049`
+
 ## [0.2.2-private-review] - 2026-07-28
 
 ### Added
