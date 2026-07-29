@@ -1,6 +1,6 @@
 [
   {
-    "version": "0.2.3-private-review",
+    "version": "0.2.4-private-review",
     "role": "rhel8_cis",
     "matrix_status": "green"
   }

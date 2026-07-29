@@ -1,20 +1,20 @@
 {
   "role_name": "rhel8_cis",
-  "release": "0.2.3-private-review",
+  "release": "0.2.4-private-review",
   "min_score": 90.0,
   "family": "rhel",
   "docker_image_tag": "stigready-prove-rhel8_cis",
-  "factory_commit": "e8e323a3af3258bee63ebc1a873ba26c0cc12049",
+  "factory_commit": "c481b47d629f5bc2357a86a933aa6f94f5245fce",
   "profiles": {
     "cis-l1": {
       "xccdf_profile_id": "xccdf_org.ssgproject.content_profile_cis_server_l1",
       "ssg_datastream": "ssg-rl8-ds.xml",
-      "evidence_dir": "compliance/releases/0.2.3-private-review/cis-l1"
+      "evidence_dir": "compliance/releases/0.2.4-private-review/cis-l1"
     },
     "cis-l2": {
       "xccdf_profile_id": "xccdf_org.ssgproject.content_profile_cis",
       "ssg_datastream": "ssg-rl8-ds.xml",
-      "evidence_dir": "compliance/releases/0.2.3-private-review/cis-l2"
+      "evidence_dir": "compliance/releases/0.2.4-private-review/cis-l2"
     }
   },
   "exempt_rules_file": "compliance/exempt-rules.txt"
