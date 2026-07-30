@@ -1,9 +1,9 @@
 galaxy_info:
   role_name: rhel8_cis
   namespace: stigready
-  description: Ansible role for RHEL 8 CIS Benchmark hardening (cis-l1, cis-l2). ComplianceAsCode/SSG
-    remediation, OpenSCAP-verified in StigForge CI. Install with ansible-galaxy or
-    git.
+  description: Ansible role for RHEL 8 CIS Benchmark hardening (cis-l1, cis-l2, cis-ws-l1,
+    cis-ws-l2). ComplianceAsCode/SSG remediation, OpenSCAP-verified in StigForge CI.
+    Install with ansible-galaxy or git.
   license: BSD-3-Clause
   min_ansible_version: '2.16'
   platforms:
