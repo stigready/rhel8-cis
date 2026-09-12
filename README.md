@@ -2,7 +2,7 @@
 
 **Ansible hardening role** for **RHEL 8** (CIS Benchmark). Suitable for playbooks, Packer/Ansible provisioners, and golden-image pipelines. Search keywords: `ansible`, `ansible-role`, `cis`, `cis-benchmark`, `cis-hardening`, `compliance`, `devsecops`, `hardening`, `infrastructure`, `openscap`, `redhat`, `rhel`, `rhel8`, `security`.
 
-StigForge-exported Ansible role **`rhel8_cis`** · release **`0.2.4`**.
+StigForge-exported Ansible role **`rhel8_cis`** · release **`0.3.0`**.
 Matrix cell status: **`green`**.
 
 ## Install (Ansible Galaxy)
@@ -13,7 +13,7 @@ lives under `compliance/` and is not loaded when the role runs.
 From **Ansible Galaxy** (after import; namespace `stigready`):
 
 ```bash
-ansible-galaxy role install stigready.rhel8_cis,0.2.4
+ansible-galaxy role install stigready.rhel8_cis,0.3.0
 ```
 
 From **GitHub** (public):
@@ -23,7 +23,7 @@ From **GitHub** (public):
 roles:
   - src: https://github.com/stigready/rhel8-cis
     scm: git
-    version: v0.2.4   # or an immutable commit SHA
+    version: v0.3.0   # or an immutable commit SHA
     name: rhel8_cis
 ```
 
@@ -38,10 +38,12 @@ Evidence was produced by **docker verify + OpenSCAP** on the factory CI run cite
 
 | Profile | Score | Floor | Gate | Ansible | Evidence tested (UTC) |
 |---|---:|---:|---|---|---|
-| `cis-l1` | **98.84%** ✓ | 90.0% | PASS ✓ | rc 0 | 20260729T223250Z |
-| `cis-l2` | **97.78%** ✓ | 90.0% | PASS ✓ | rc 0 | 20260729T223639Z |
+| `cis-l1` | **96.51%** ✓ | 90.0% | PASS ✓ | rc 0 | 20260912T133523Z |
+| `cis-l2` | **96.67%** ✓ | 90.0% | PASS ✓ | rc 0 | 20260912T133825Z |
+| `cis-ws-l1` | **96.51%** ✓ | 90.0% | PASS ✓ | rc 0 | 20260912T134025Z |
+| `cis-ws-l2` | **96.63%** ✓ | 90.0% | PASS ✓ | rc 0 | 20260912T134326Z |
 
-Full artifacts per profile: `compliance/releases/0.2.4/<profile>/` (`score.json`, `results.xml`, `report.html`, `evidence.json`, `evidence-report.html`, `poam.md`).
+Full artifacts per profile: `compliance/releases/0.3.0/<profile>/` (`score.json`, `results.xml`, `arf.xml`, `evidence.json`, `evidence-report.html`, `poam.md`).
 
 ## Reports & review
 
@@ -54,7 +56,7 @@ Full artifacts per profile: `compliance/releases/0.2.4/<profile>/` (`score.json`
 Re-run OpenSCAP in Docker and compare to this release's evidence:
 
 ```bash
-make prove RELEASE=0.2.4
+make prove RELEASE=0.3.0
 ```
 
 Or score your own `results.xml`: see **[compliance/README.md](compliance/README.md)**.
@@ -66,7 +68,7 @@ Or score your own `results.xml`: see **[compliance/README.md](compliance/README.
 
 ## Factory
 
-- Monorepo: [stigready/stigforge](https://github.com/stigready/stigforge) @ `7f7cafc85a392bf2a7eb04f1b979185dbcdf5530`
-- CI run: https://github.com/stigready/stigforge/actions/runs/30496236357
+- Monorepo: [stigready/stigforge](https://github.com/stigready/stigforge) @ `562a1f7c1a8e19235ee26e972174d1be6c88998c`
+- CI run: https://github.com/stigready/stigforge/actions/runs/34693316989
 - Catalog: [https://stigready.com/#stigforge](https://stigready.com/#stigforge)
 

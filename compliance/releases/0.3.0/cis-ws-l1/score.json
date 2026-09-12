@@ -1,0 +1,19 @@
+{
+  "pass": 83,
+  "fail": 3,
+  "other": 0,
+  "total_scored": 86,
+  "score": 96.51,
+  "min_score": 90.0,
+  "meets_floor": true,
+  "gate_pass": true,
+  "enforce": true,
+  "failures": [
+    "accounts_password_pam_modules_in_authselect_profile",
+    "no_files_or_dirs_ungroupowned",
+    "use_pam_wheel_group_for_su"
+  ],
+  "regressions": [],
+  "baseline": null,
+  "openscap_line": "OpenSCAP: pass=83 fail=3 score=96.5% (target 90%)"
+}
