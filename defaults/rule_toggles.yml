@@ -39,7 +39,6 @@ rhel8cis_accounts_user_interactive_home_directory_exists: true
 rhel8cis_aide_build_database: true
 rhel8cis_aide_check_audit_tools: true
 rhel8cis_aide_periodic_cron_checking: true
-rhel8cis_always: true
 rhel8cis_audit_rules_continue_loading: true
 rhel8cis_audit_rules_dac_modification_chmod: true
 rhel8cis_audit_rules_dac_modification_chown: true
