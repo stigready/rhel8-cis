@@ -1,0 +1,24 @@
+---
+# StigForge supplement for rhel8_cis - not overwritten by `stigforge generate`.
+
+# sshd_limit_user_access (cis, cis_server_l1). The rule is satisfied by exactly one of AllowUsers,
+# AllowGroups, DenyUsers or DenyGroups in sshd_config. A cloud image cannot know a site's user
+# policy, so this adds the one restriction that never affects a customer: root is denied by name
+# (root login is already off via PermitRootLogin no). The same task rhel9_cis and rhel10_cis carry;
+# customers who want AllowGroups set it themselves. Documented in the POA&M, NOT an exemption.
+- name: Limit sshd user access by denying root by name (sshd_limit_user_access)
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^\s*DenyUsers\s'
+    line: 'DenyUsers root'
+    insertbefore: '^\s*Match\s'
+    firstmatch: true
+    state: present
+    validate: /usr/sbin/sshd -t -f %s
+  tags:
+  - sshd_limit_user_access
+  - configure_strategy
+  - low_complexity
+  - low_disruption
+  - medium_severity
+  - no_reboot_needed

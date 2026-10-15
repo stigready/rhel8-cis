@@ -341,6 +341,7 @@ rhel8cis_sshd_disable_root_login: true
 rhel8cis_sshd_do_not_permit_user_env: true
 rhel8cis_sshd_enable_pam: true
 rhel8cis_sshd_enable_warning_banner_net: true
+rhel8cis_sshd_limit_user_access: true
 rhel8cis_sshd_set_idle_timeout: true
 rhel8cis_sshd_set_keepalive: true
 rhel8cis_sshd_set_login_grace_time: true
