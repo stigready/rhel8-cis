@@ -256,7 +256,6 @@ rhel8cis_kernel_module_freevxfs_disabled: true
 rhel8cis_kernel_module_hfs_disabled: true
 rhel8cis_kernel_module_hfsplus_disabled: true
 rhel8cis_kernel_module_jffs2_disabled: true
-rhel8cis_kernel_module_overlayfs_disabled: true
 rhel8cis_kernel_module_rds_disabled: true
 rhel8cis_kernel_module_sctp_disabled: true
 rhel8cis_kernel_module_squashfs_disabled: true
@@ -352,6 +351,7 @@ rhel8cis_sshd_set_maxstartups: true
 rhel8cis_sudo_add_use_pty: true
 rhel8cis_sudo_custom_logfile: true
 rhel8cis_sudo_remove_no_authenticate: true
+rhel8cis_sudo_require_reauthentication: true
 rhel8cis_sysctl_fs_protected_hardlinks: true
 rhel8cis_sysctl_fs_protected_symlinks: true
 rhel8cis_sysctl_fs_suid_dumpable: true
