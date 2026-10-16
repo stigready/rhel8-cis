@@ -22,3 +22,39 @@
   - low_disruption
   - medium_severity
   - no_reboot_needed
+
+# ---------------------------------------------------------------------------------------------
+# systemd-journal-remote's service account (/sbin/nologin) has its home in /var/log/journal/remote. Installing the package
+# (`Ensure systemd-journal-remote is installed`) after this role has turned on home creation copies /etc/skel there, leaving
+# .bash_logout/.bash_profile/.bashrc at 0644 in /var/log, which file_permissions_var_log_stig forbids and the factory's
+# shipped-state check failed on (stigready rhel-9:cis-l2, 2026-10-16). A nologin account needs no shell init files: remove
+# them. No rule-id tag on purpose (a product fix to this role's own side effect, not a per-rule opt-out).
+# ---------------------------------------------------------------------------------------------
+- name: Product hardening | Find shell init files in the systemd-journal-remote home
+  ansible.builtin.find:
+    paths: /var/log/journal/remote
+    hidden: true
+    file_type: file
+    patterns:
+    - .bash_logout
+    - .bash_profile
+    - .bashrc
+    - .cshrc
+    - .kshrc
+    - .tcshrc
+    - .zshrc
+  register: stigforge_journal_remote_skel
+  tags:
+  - low_disruption
+  - no_reboot_needed
+
+- name: Product hardening | Remove shell init files from the systemd-journal-remote home under /var/log
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  loop: "{{ stigforge_journal_remote_skel.files | default([]) }}"
+  loop_control:
+    label: "{{ item.path }}"
+  tags:
+  - low_disruption
+  - no_reboot_needed

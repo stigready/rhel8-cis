@@ -56476,3 +56476,46 @@
         or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state
         independently.'
   when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_sshd_limit_user_access | default(true) | bool)
+- block:
+  - name: Product hardening | Find shell init files in the systemd-journal-remote home
+    ansible.builtin.find:
+      paths: /var/log/journal/remote
+      hidden: true
+      file_type: file
+      patterns:
+      - .bash_logout
+      - .bash_profile
+      - .bashrc
+      - .cshrc
+      - .kshrc
+      - .tcshrc
+      - .zshrc
+    register: stigforge_journal_remote_skel
+    tags:
+    - low_disruption
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Product hardening | Find shell init files in the systemd-journal-remote home''
+      (OpenSCAP is the score gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Product hardening | Find shell init files in the systemd-journal-remote home'' raised an error (module
+        or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state
+        independently.'
+- block:
+  - name: Product hardening | Remove shell init files from the systemd-journal-remote home under /var/log
+    ansible.builtin.file:
+      path: '{{ item.path }}'
+      state: absent
+    loop: '{{ stigforge_journal_remote_skel.files | default([]) }}'
+    loop_control:
+      label: '{{ item.path }}'
+    tags:
+    - low_disruption
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Product hardening | Remove shell init files from the systemd-journal-remote
+      home under /var/log'' (OpenSCAP is the score gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Product hardening | Remove shell init files from the systemd-journal-remote home under /var/log''
+        raised an error (module or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the
+        resulting system state independently.'
