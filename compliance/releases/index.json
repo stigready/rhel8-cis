@@ -73,5 +73,10 @@
     "version": "0.3.36",
     "role": "rhel8_cis",
     "matrix_status": "green"
+  },
+  {
+    "version": "0.3.37",
+    "role": "rhel8_cis",
+    "matrix_status": "green"
   }
 ]

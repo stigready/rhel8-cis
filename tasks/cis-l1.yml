@@ -33222,6 +33222,7 @@
         resulting system state independently.'
 - block:
   - name: Product hardening | Ensure auditd is running after the role's audit changes
+    when: '''audit'' in ansible_facts.packages'
     ansible.builtin.systemd:
       name: auditd
       state: started
@@ -33238,6 +33239,7 @@
         independently.'
 - block:
   - name: Product hardening | auditd must be running (a stopped auditd with immutable rules wedges every audited syscall)
+    when: '''audit'' in ansible_facts.packages'
     ansible.builtin.command: auditctl -s
     register: stigforge_auditd_status
     changed_when: false
