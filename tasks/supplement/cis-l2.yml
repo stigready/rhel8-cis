@@ -128,6 +128,81 @@
   - no_reboot_needed
 
 # ---------------------------------------------------------------------------------------------
+# /var/log/tuned/tuned.log. stigready rhel-8:cis-l1 (leg 2a4cb545391b) and rhel-8:cis-l2 (leg 90d7515e7be3), 2026-10-19, failed the
+# hardened-image /var/log check (`find -P /var/log/ -perm /u+xs,g+xws,o+xwrt`, i.e. log files 0640 or stricter, the mode SSG's
+# file_permissions_var_log_stig OVAL requires) on /var/log/tuned/tuned.log only. tuned is an OS service: it opens its log with the
+# service's default umask (022), and its own size-based rotation recreates the file the same way, so a one-time chmod would drift.
+# Fix it at the source: a drop-in gives tuned.service UMask=0027 (new and rotated files 0640), and the files already on disk are
+# brought to 0640 or stricter. systemd ignores the drop-in when tuned is not installed. No rule-id tag on purpose: the RHEL 8 CIS
+# profile has no file-level /var/log permission rule; this is a product guarantee, not a per-rule opt-out.
+# ---------------------------------------------------------------------------------------------
+- name: Product hardening | Create the tuned.service drop-in directory
+  ansible.builtin.file:
+    path: /etc/systemd/system/tuned.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  tags:
+  - low_disruption
+  - no_reboot_needed
+
+- name: Product hardening | Give tuned a 0027 umask so tuned.log is created and rotated 0640
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/tuned.service.d/50-stigready-umask.conf
+    content: |
+      # StigReady: tuned writes /var/log/tuned/tuned.log (and its rotations) with the service umask.
+      # Hardened images keep /var/log files 0640 or stricter.
+      [Service]
+      UMask=0027
+    owner: root
+    group: root
+    mode: '0644'
+  register: stigforge_tuned_umask_dropin
+  tags:
+  - low_disruption
+  - no_reboot_needed
+
+- name: Product hardening | Reload systemd after the tuned drop-in changed
+  ansible.builtin.systemd:
+    daemon_reload: true
+  when: stigforge_tuned_umask_dropin is changed
+  tags:
+  - low_disruption
+  - no_reboot_needed
+
+- name: Product hardening | Restart tuned so the running service uses the new umask
+  ansible.builtin.systemd:
+    name: tuned
+    state: restarted
+  when:
+  - stigforge_tuned_umask_dropin is changed
+  - "'tuned' in ansible_facts.packages"
+  tags:
+  - low_disruption
+  - no_reboot_needed
+
+- name: Product hardening | Find the existing tuned logs
+  ansible.builtin.find:
+    paths: /var/log/tuned
+    patterns: 'tuned.log*'
+  register: stigforge_tuned_logs
+  tags:
+  - low_disruption
+  - no_reboot_needed
+
+- name: Product hardening | Set the existing tuned logs to 0640 or stricter
+  ansible.builtin.file:
+    path: '{{ item.path }}'
+    mode: u-xs,g-wxs,o-rwxt
+  loop: '{{ stigforge_tuned_logs.files | default([]) }}'
+  loop_control:
+    label: '{{ item.path }}'
+  tags:
+  - low_disruption
+  - no_reboot_needed
+
+# ---------------------------------------------------------------------------------------------
 # Leave auditd running. The generated rules restart auditd after editing them (`service auditd restart`, more than once per role);
 # on rhel-9-arm64:cis-l2 (stigready, 2026-10-16) the second restart 14 s after the first stopped auditd and never started it. With
 # the rules immutable (-e 2) and nothing reading events, the audit backlog fills and every audited syscall waits, which wedged new

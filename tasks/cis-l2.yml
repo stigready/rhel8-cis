@@ -56608,6 +56608,114 @@
         raised an error (module or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the
         resulting system state independently.'
 - block:
+  - name: Product hardening | Create the tuned.service drop-in directory
+    ansible.builtin.file:
+      path: /etc/systemd/system/tuned.service.d
+      state: directory
+      owner: root
+      group: root
+      mode: '0755'
+    tags:
+    - low_disruption
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Product hardening | Create the tuned.service drop-in directory'' (OpenSCAP
+      is the score gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Product hardening | Create the tuned.service drop-in directory'' raised an error (module or templating)
+        and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+- block:
+  - name: Product hardening | Give tuned a 0027 umask so tuned.log is created and rotated 0640
+    ansible.builtin.copy:
+      dest: /etc/systemd/system/tuned.service.d/50-stigready-umask.conf
+      content: '# StigReady: tuned writes /var/log/tuned/tuned.log (and its rotations) with the service umask.
+
+        # Hardened images keep /var/log files 0640 or stricter.
+
+        [Service]
+
+        UMask=0027
+
+        '
+      owner: root
+      group: root
+      mode: '0644'
+    register: stigforge_tuned_umask_dropin
+    tags:
+    - low_disruption
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Product hardening | Give tuned a 0027 umask so tuned.log is created and rotated
+      0640'' (OpenSCAP is the score gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Product hardening | Give tuned a 0027 umask so tuned.log is created and rotated 0640'' raised an
+        error (module or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting
+        system state independently.'
+- block:
+  - name: Product hardening | Reload systemd after the tuned drop-in changed
+    ansible.builtin.systemd:
+      daemon_reload: true
+    when: stigforge_tuned_umask_dropin is changed
+    tags:
+    - low_disruption
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Product hardening | Reload systemd after the tuned drop-in changed'' (OpenSCAP
+      is the score gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Product hardening | Reload systemd after the tuned drop-in changed'' raised an error (module or templating)
+        and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+- block:
+  - name: Product hardening | Restart tuned so the running service uses the new umask
+    ansible.builtin.systemd:
+      name: tuned
+      state: restarted
+    when:
+    - stigforge_tuned_umask_dropin is changed
+    - '''tuned'' in ansible_facts.packages'
+    tags:
+    - low_disruption
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Product hardening | Restart tuned so the running service uses the new umask''
+      (OpenSCAP is the score gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Product hardening | Restart tuned so the running service uses the new umask'' raised an error (module
+        or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state
+        independently.'
+- block:
+  - name: Product hardening | Find the existing tuned logs
+    ansible.builtin.find:
+      paths: /var/log/tuned
+      patterns: tuned.log*
+    register: stigforge_tuned_logs
+    tags:
+    - low_disruption
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Product hardening | Find the existing tuned logs'' (OpenSCAP is the score
+      gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Product hardening | Find the existing tuned logs'' raised an error (module or templating) and was
+        skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+- block:
+  - name: Product hardening | Set the existing tuned logs to 0640 or stricter
+    ansible.builtin.file:
+      path: '{{ item.path }}'
+      mode: u-xs,g-wxs,o-rwxt
+    loop: '{{ stigforge_tuned_logs.files | default([]) }}'
+    loop_control:
+      label: '{{ item.path }}'
+    tags:
+    - low_disruption
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Product hardening | Set the existing tuned logs to 0640 or stricter'' (OpenSCAP
+      is the score gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Product hardening | Set the existing tuned logs to 0640 or stricter'' raised an error (module or
+        templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+- block:
   - name: Product hardening | Ensure auditd is running after the role's audit changes
     when: '''audit'' in ansible_facts.packages'
     ansible.builtin.systemd:
