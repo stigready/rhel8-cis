@@ -1001,38 +1001,6 @@
         skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
   when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_service_rsyslog_enabled | default(true) | bool)
 - block:
-  - name: Enable systemd-journal-upload Service - Enable service systemd-journal-upload
-    block:
-    - name: Enable systemd-journal-upload Service - Enable Service systemd-journal-upload
-      ansible.builtin.systemd:
-        name: systemd-journal-upload
-        enabled: true
-        state: started
-        masked: false
-      when:
-      - '"systemd-journal-remote" in ansible_facts.packages'
-    tags:
-    - CCE-87557-5
-    - enable_strategy
-    - low_complexity
-    - low_disruption
-    - medium_severity
-    - no_reboot_needed
-    - service_systemd-journal-upload_enabled
-    - special_service_block
-    when:
-    - '"kernel-core" in ansible_facts.packages'
-    - ( ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"] and "systemd-journal-remote"
-      in ansible_facts.packages )
-  rescue:
-  - name: 'StigForge: continue after error in ''Enable systemd-journal-upload Service - Enable service systemd-journal-upload''
-      (OpenSCAP is the score gate)'
-    ansible.builtin.debug:
-      msg: 'StigForge: ''Enable systemd-journal-upload Service - Enable service systemd-journal-upload'' raised an error (module
-        or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state
-        independently.'
-  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_special_service_block | default(true) | bool)
-- block:
   - name: Enable systemd-journald Service - Enable service systemd-journald
     block:
     - name: Enable systemd-journald Service - Enable Service systemd-journald
@@ -33177,6 +33145,95 @@
         or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state
         independently.'
   when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_sshd_limit_user_access | default(true) | bool)
+- block:
+  - name: Ensure the group used by pam_wheel for su exists
+    ansible.builtin.group:
+      name: sugroup
+      state: present
+    tags:
+    - use_pam_wheel_group_for_su
+    - configure_strategy
+    - low_complexity
+    - low_disruption
+    - medium_severity
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Ensure the group used by pam_wheel for su exists'' (OpenSCAP is the score
+      gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Ensure the group used by pam_wheel for su exists'' raised an error (module or templating) and was
+        skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_use_pam_wheel_group_for_su | default(true) | bool)
+- block:
+  - name: Restrict su to the sugroup group with pam_wheel (use_pam_wheel_group_for_su)
+    ansible.builtin.lineinfile:
+      path: /etc/pam.d/su
+      regexp: ^\s*auth\s+required\s+pam_wheel\.so
+      line: auth            required        pam_wheel.so use_uid group=sugroup
+      insertafter: ^#?\s*auth\s+required\s+pam_wheel\.so
+      state: present
+    tags:
+    - use_pam_wheel_group_for_su
+    - configure_strategy
+    - low_complexity
+    - low_disruption
+    - medium_severity
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Restrict su to the sugroup group with pam_wheel (use_pam_wheel_group_for_su)''
+      (OpenSCAP is the score gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Restrict su to the sugroup group with pam_wheel (use_pam_wheel_group_for_su)'' raised an error (module
+        or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state
+        independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_use_pam_wheel_group_for_su | default(true) | bool)
+- block:
+  - name: Product hardening | Gather service facts for systemd-journal-upload
+    ansible.builtin.service_facts: null
+    tags:
+    - low_disruption
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Product hardening | Gather service facts for systemd-journal-upload'' (OpenSCAP
+      is the score gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Product hardening | Gather service facts for systemd-journal-upload'' raised an error (module or
+        templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+- block:
+  - name: Product hardening | Stop and disable systemd-journal-upload (no upload URL in an AMI)
+    ansible.builtin.systemd:
+      name: systemd-journal-upload
+      state: stopped
+      enabled: false
+    when: '''systemd-journal-upload.service'' in ansible_facts.services'
+    tags:
+    - low_disruption
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Product hardening | Stop and disable systemd-journal-upload (no upload URL
+      in an AMI)'' (OpenSCAP is the score gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Product hardening | Stop and disable systemd-journal-upload (no upload URL in an AMI)'' raised an
+        error (module or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting
+        system state independently.'
+- block:
+  - name: Product hardening | Remove the dynamic-user state left by systemd-journal-upload
+    ansible.builtin.file:
+      path: '{{ item }}'
+      state: absent
+    loop:
+    - /var/lib/systemd/journal-upload
+    - /var/lib/private/systemd/journal-upload
+    tags:
+    - low_disruption
+    - no_reboot_needed
+  rescue:
+  - name: 'StigForge: continue after error in ''Product hardening | Remove the dynamic-user state left by systemd-journal-upload''
+      (OpenSCAP is the score gate)'
+    ansible.builtin.debug:
+      msg: 'StigForge: ''Product hardening | Remove the dynamic-user state left by systemd-journal-upload'' raised an error
+        (module or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system
+        state independently.'
 - block:
   - name: Product hardening | Find shell init files in the systemd-journal-remote home
     ansible.builtin.find:

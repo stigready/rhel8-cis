@@ -387,5 +387,6 @@ rhel8cis_sysctl_net_ipv6_conf_default_accept_ra: true
 rhel8cis_sysctl_net_ipv6_conf_default_accept_redirects: true
 rhel8cis_sysctl_net_ipv6_conf_default_accept_source_route: true
 rhel8cis_sysctl_net_ipv6_conf_default_forwarding: true
+rhel8cis_use_pam_wheel_group_for_su: true
 rhel8cis_wireless_disable_interfaces: true
 rhel8cis_xwayland_disabled: true

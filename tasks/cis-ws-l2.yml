@@ -1030,38 +1030,6 @@
         skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
   when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_service_rsyslog_enabled | default(true) | bool)
 - block:
-  - name: Enable systemd-journal-upload Service - Enable service systemd-journal-upload
-    block:
-    - name: Enable systemd-journal-upload Service - Enable Service systemd-journal-upload
-      ansible.builtin.systemd:
-        name: systemd-journal-upload
-        enabled: true
-        state: started
-        masked: false
-      when:
-      - '"systemd-journal-remote" in ansible_facts.packages'
-    tags:
-    - CCE-87557-5
-    - enable_strategy
-    - low_complexity
-    - low_disruption
-    - medium_severity
-    - no_reboot_needed
-    - service_systemd-journal-upload_enabled
-    - special_service_block
-    when:
-    - '"kernel-core" in ansible_facts.packages'
-    - ( ansible_virtualization_type not in ["docker", "lxc", "openvz", "podman", "container"] and "systemd-journal-remote"
-      in ansible_facts.packages )
-  rescue:
-  - name: 'StigForge: continue after error in ''Enable systemd-journal-upload Service - Enable service systemd-journal-upload''
-      (OpenSCAP is the score gate)'
-    ansible.builtin.debug:
-      msg: 'StigForge: ''Enable systemd-journal-upload Service - Enable service systemd-journal-upload'' raised an error (module
-        or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state
-        independently.'
-  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_special_service_block | default(true) | bool)
-- block:
   - name: Enable systemd-journald Service - Enable service systemd-journald
     block:
     - name: Enable systemd-journald Service - Enable Service systemd-journald
