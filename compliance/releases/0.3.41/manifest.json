@@ -1,11 +1,9 @@
 {
   "role": "rhel8_cis",
   "version": "0.3.41",
-  "factory_repo": "stigready/stigforge",
   "matrix_status": "green",
-  "pipeline_run_id": "39234799252",
   "factory_commit": "3ede14df7f99034ff9192cf842fc93a92dab6f70",
   "content_digest": "4d9e7fef760aa36e7fe54ce14f422e87a7d2e950a9a44e7401aa49f5d50772e3",
   "container_verify": "removed-0017",
-  "compliance_evidence": "Not produced here. Container verify was removed by decision 0017 because a container cannot evaluate most STIG rules; compliance evidence for this role comes from the AMI build that consumes it in stigready/stigready."
+  "compliance_evidence": "Not produced here. Container verify was removed because a container cannot evaluate most STIG rules; compliance evidence for this role comes from the AMI build that consumes it in the StigReady image factory."
 }
