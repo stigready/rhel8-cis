@@ -353,6 +353,8 @@
     ansible.builtin.debug:
       msg: 'StigForge: ''Ensure systemd-journal-remote is installed'' raised an error (module or templating) and was skipped;
         continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_package_systemd_journal_remote_installed | default(true)
+    | bool)
 - name: 'StigForge: refresh package facts after ''Ensure systemd-journal-remote is installed'' installed a package'
   ansible.builtin.package_facts:
     manager: auto
@@ -669,6 +671,7 @@
     ansible.builtin.debug:
       msg: 'StigForge: ''Uninstall cyrus-imapd Package: Ensure cyrus-imapd is removed'' raised an error (module or templating)
         and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_package_cyrus_imapd_removed | default(true) | bool)
 - block:
   - name: 'Uninstall dovecot Package: Ensure dovecot is removed'
     ansible.builtin.package:
@@ -841,6 +844,7 @@
     ansible.builtin.debug:
       msg: 'StigForge: ''Uninstall telnet-server Package: Ensure telnet-server is removed'' raised an error (module or templating)
         and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_package_telnet_server_removed | default(true) | bool)
 - block:
   - name: 'Remove telnet Clients: Ensure telnet is removed'
     ansible.builtin.package:
@@ -888,6 +892,7 @@
     ansible.builtin.debug:
       msg: 'StigForge: ''Uninstall tftp-server Package: Ensure tftp-server is removed'' raised an error (module or templating)
         and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_package_tftp_server_removed | default(true) | bool)
 - block:
   - name: 'Remove tftp Daemon: Ensure tftp is removed'
     ansible.builtin.package:
@@ -970,6 +975,7 @@
     ansible.builtin.debug:
       msg: 'StigForge: ''Uninstall net-snmp Package: Ensure net-snmp is removed'' raised an error (module or templating) and
         was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_package_net_snmp_removed | default(true) | bool)
 - block:
   - name: Enable rsyslog Service - Enable service rsyslog
     block:
@@ -1028,7 +1034,8 @@
     ansible.builtin.debug:
       msg: 'StigForge: ''Enable systemd-journald Service - Enable service systemd-journald'' raised an error (module or templating)
         and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
-  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_special_service_block | default(true) | bool)
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_service_systemd_journald_enabled | default(true) |
+    bool)
 - block:
   - name: Disable Bluetooth Service - Disable service bluetooth
     block:
@@ -1184,7 +1191,7 @@
     ansible.builtin.debug:
       msg: 'StigForge: ''Disable Avahi Server Software - Disable service avahi-daemon'' raised an error (module or templating)
         and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
-  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_special_service_block | default(true) | bool)
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_service_avahi_daemon_disabled | default(true) | bool)
 - block:
   - name: Enable cron Service - Enable service crond
     block:
@@ -1355,7 +1362,7 @@
     ansible.builtin.debug:
       msg: 'StigForge: ''Disable Network File System (nfs) - Disable service nfs-server'' raised an error (module or templating)
         and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
-  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_special_service_block | default(true) | bool)
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_service_nfs_disabled | default(true) | bool)
 - block:
   - name: Disable the CUPS Service - Disable service cups
     block:
@@ -5107,7 +5114,7 @@
     ansible.builtin.lineinfile:
       path: /etc/security/pwhistory.conf
       create: true
-      regexp: ''
+      regexp: ^\s*enforce_for_root\s*$
       line: enforce_for_root
       state: present
     when:
@@ -9056,7 +9063,7 @@
     ansible.builtin.lineinfile:
       path: /etc/security/pwquality.conf
       create: true
-      regexp: ''
+      regexp: ^\s*enforce_for_root\s*$
       line: enforce_for_root
       state: present
     when:
@@ -15473,6 +15480,8 @@
       msg: 'StigForge: ''Disable systemd-journal-remote Socket - Collect systemd Socket Units Present in the System'' raised
         an error (module or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting
         system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_socket_systemd_journal_remote_disabled | default(true)
+    | bool)
 - block:
   - name: Disable systemd-journal-remote Socket - Ensure systemd-journal-remote.socket is Masked
     ansible.builtin.systemd:
@@ -15498,6 +15507,8 @@
       msg: 'StigForge: ''Disable systemd-journal-remote Socket - Ensure systemd-journal-remote.socket is Masked'' raised an
         error (module or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting
         system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_socket_systemd_journal_remote_disabled | default(true)
+    | bool)
 - block:
   - name: Ensure rsyslog Does Not Accept Remote Messages Unless Acting As Log Server - Define Rsyslog Config Lines Regex in
       Legacy Syntax
@@ -15850,6 +15861,7 @@
       msg: 'StigForge: "Setting unquoted shell-style assignment of ''FirewallBackend'' to ''nftables'' in ''/etc/firewalld/firewalld.conf''"
         raised an error (module or templating) and was skipped; continuing so later rules still run. OpenSCAP evaluates the
         resulting system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_firewalld_backend | default(true) | bool)
 - block:
   - name: Configure Accepting Router Advertisements on All IPv6 Interfaces - Set fact for sysctl paths
     ansible.builtin.set_fact:
@@ -21080,6 +21092,8 @@
     ansible.builtin.debug:
       msg: 'StigForge: "Ensure kernel module ''firewire-core'' is disabled" raised an error (module or templating) and was
         skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_kernel_module_firewire_core_disabled | default(true)
+    | bool)
 - block:
   - name: Ensure kernel module 'firewire-core' is blacklisted
     ansible.builtin.lineinfile:
@@ -21105,6 +21119,8 @@
     ansible.builtin.debug:
       msg: 'StigForge: "Ensure kernel module ''firewire-core'' is blacklisted" raised an error (module or templating) and
         was skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_kernel_module_firewire_core_disabled | default(true)
+    | bool)
 - block:
   - name: Ensure kernel module 'rds' is disabled
     ansible.builtin.lineinfile:
@@ -24316,6 +24332,8 @@
     ansible.builtin.debug:
       msg: 'StigForge: "Ensure kernel module ''usb-storage'' is disabled" raised an error (module or templating) and was skipped;
         continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_kernel_module_usb_storage_disabled | default(true)
+    | bool)
 - block:
   - name: Ensure kernel module 'usb-storage' is blacklisted
     ansible.builtin.lineinfile:
@@ -24347,6 +24365,8 @@
     ansible.builtin.debug:
       msg: 'StigForge: "Ensure kernel module ''usb-storage'' is blacklisted" raised an error (module or templating) and was
         skipped; continuing so later rules still run. OpenSCAP evaluates the resulting system state independently.'
+  when: (stigforge_rules_enabled | default(true) | bool) and (rhel8cis_kernel_module_usb_storage_disabled | default(true)
+    | bool)
 - block:
   - name: 'Add nodev Option to /dev/shm: Check information associated to mountpoint'
     ansible.builtin.command: findmnt  '/dev/shm'

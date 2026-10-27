@@ -1,0 +1,9 @@
+{
+  "role": "rhel8_cis",
+  "version": "0.3.51",
+  "matrix_status": "green",
+  "factory_commit": "8e25cfbe2f728d01f4a83e9ecd222c5f20fae225",
+  "content_digest": "39525e5d6e2b487d80f8d83965f9a89a16a2f0e9a5f3df5f10d70f46208d99b7",
+  "container_verify": "removed-0017",
+  "compliance_evidence": "Not produced here. Container verify was removed because a container cannot evaluate most hardening rules. No OpenSCAP results ship with this release. A StigReady AMI build that pins this role version scores the image it builds."
+}
